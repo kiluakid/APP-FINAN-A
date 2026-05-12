@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💰 Meu Dinheiro • Controle Financeiro</title>
+    <title>💰 Meu Dinheiro • Controle Financeiro com Backup</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -43,7 +43,6 @@
             min-height: 100vh;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            backdrop-filter: blur(0px);
             padding: 16px;
         }
 
@@ -53,10 +52,10 @@
             padding: 10px 0 40px;
         }
 
-        /* Header elegante */
+        /* Header */
         .header {
             text-align: center;
-            padding: 24px 0 18px;
+            padding: 24px 0 8px;
             position: relative;
         }
         .header .logo {
@@ -84,7 +83,96 @@
             letter-spacing: -0.2px;
         }
 
-        /* Cards de resumo com vidro */
+        /* Status bar */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 8px 0 18px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 30px;
+            padding: 8px 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .status-bar .status-dot {
+            width: 9px;
+            height: 9px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px rgba(16,185,129,0.6);
+        }
+        .status-bar .status-text {
+            font-weight: 600;
+            letter-spacing: -0.2px;
+        }
+
+        /* Botões de ação (backup) */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: inherit;
+            letter-spacing: -0.2px;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(14px);
+            color: var(--text-primary);
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .btn-action:hover {
+            background: #fff;
+            border-color: rgba(92,77,255,0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+        }
+        .btn-action i {
+            font-size: 1rem;
+        }
+        .btn-action.primary-action {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 6px 14px rgba(92,77,255,0.25);
+        }
+        .btn-action.primary-action:hover {
+            background: var(--primary-hover);
+        }
+        .btn-action.success-action {
+            background: rgba(16,185,129,0.1);
+            border-color: rgba(16,185,129,0.3);
+            color: #059669;
+        }
+        .btn-action.warning-action {
+            background: rgba(245,158,11,0.08);
+            border-color: rgba(245,158,11,0.3);
+            color: #b45309;
+        }
+
+        /* Cards de resumo */
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -97,7 +185,6 @@
                 gap: 12px;
             }
         }
-
         .summary-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -175,7 +262,6 @@
             }
         }
 
-        /* Cards de vidro */
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(18px);
@@ -306,7 +392,7 @@
             border-color: rgba(244,63,94,0.4);
         }
 
-        /* Lista de transações */
+        /* Lista */
         .filter-bar {
             display: flex;
             gap: 8px;
@@ -338,7 +424,6 @@
             background: rgba(255,255,255,0.9);
             border-color: rgba(0,0,0,0.1);
         }
-
         .transaction-list {
             list-style: none;
             max-height: 420px;
@@ -447,7 +532,7 @@
             max-height: 240px;
         }
 
-        /* Toast flutuante */
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 28px;
@@ -481,6 +566,11 @@
             background: rgba(220, 38, 38, 0.9);
         }
 
+        /* Arquivo de input escondido */
+        #importFile {
+            display: none;
+        }
+
         @media (max-width: 500px) {
             .summary-card {
                 padding: 16px 18px;
@@ -491,6 +581,13 @@
             }
             .card {
                 padding: 18px 16px;
+            }
+            .action-buttons {
+                gap: 6px;
+            }
+            .btn-action {
+                padding: 8px 14px;
+                font-size: 0.75rem;
             }
         }
     </style>
@@ -504,6 +601,27 @@
                 <i class="fas fa-chart-pie"></i> Meu Dinheiro
             </div>
             <p class="subtitle">Controle inteligente das suas finanças pessoais</p>
+        </div>
+
+        <!-- Status de salvamento automático -->
+        <div class="status-bar">
+            <span class="status-dot" id="statusDot"></span>
+            <span class="status-text" id="statusMessage">Salvo automaticamente</span>
+            <span style="font-size:0.7rem; opacity:0.7;" id="lastSavedTime"></span>
+        </div>
+
+        <!-- Botões de ação manual -->
+        <div class="action-buttons">
+            <button class="btn-action primary-action" id="manualSaveBtn">
+                <i class="fas fa-cloud-upload-alt"></i> Salvar Agora
+            </button>
+            <button class="btn-action success-action" id="exportBtn">
+                <i class="fas fa-download"></i> Exportar Backup
+            </button>
+            <button class="btn-action warning-action" id="importBtn">
+                <i class="fas fa-upload"></i> Restaurar Backup
+            </button>
+            <input type="file" id="importFile" accept=".json">
         </div>
 
         <!-- Cards de Resumo -->
@@ -533,7 +651,6 @@
 
         <!-- Layout principal -->
         <div class="main-layout">
-            <!-- Formulário -->
             <div class="card">
                 <h2><i class="fas fa-plus-circle"></i> Nova Transação</h2>
                 <form id="transactionForm">
@@ -596,7 +713,6 @@
                 </form>
             </div>
 
-            <!-- Lista de transações -->
             <div class="card">
                 <h2><i class="fas fa-list-ul"></i> Suas Transações</h2>
                 <div class="filter-bar">
@@ -613,19 +729,17 @@
             </div>
         </div>
 
-        <!-- Gráfico -->
         <div class="chart-container">
             <h2><i class="fas fa-chart-bar"></i> Resumo de Despesas por Categoria</h2>
             <canvas id="expenseChart"></canvas>
         </div>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
     <script>
         (function() {
-            const STORAGE_KEY = 'meuDinheiro_v2_transactions';
+            const STORAGE_KEY = 'meuDinheiro_v3_transactions';
             let transactions = [];
             let currentFilter = 'todas';
 
@@ -643,6 +757,13 @@
             const filterBtns = document.querySelectorAll('.filter-btn');
             const toast = document.getElementById('toast');
             const expenseChartCanvas = document.getElementById('expenseChart');
+            const manualSaveBtn = document.getElementById('manualSaveBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            const importBtn = document.getElementById('importBtn');
+            const importFile = document.getElementById('importFile');
+            const statusDot = document.getElementById('statusDot');
+            const statusMessage = document.getElementById('statusMessage');
+            const lastSavedTime = document.getElementById('lastSavedTime');
 
             dataInput.value = new Date().toISOString().split('T')[0];
 
@@ -653,6 +774,18 @@
 
             function saveTransactions() {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+                updateLastSavedStatus();
+            }
+
+            function updateLastSavedStatus() {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                lastSavedTime.textContent = 'hoje às ' + timeStr;
+                statusDot.style.background = '#10b981';
+                statusMessage.textContent = 'Salvo automaticamente';
+                // Efeito de pulsação no ponto verde
+                statusDot.style.transform = 'scale(1.3)';
+                setTimeout(() => { statusDot.style.transform = 'scale(1)'; }, 200);
             }
 
             function formatCurrency(value) {
@@ -778,6 +911,53 @@
                 updateChart();
             }
 
+            // Salvamento automático: sempre que uma ação modifica transactions, chamamos saveTransactions()
+            // Isso já ocorre em adicionar (submit) e excluir (botão). Para segurança extra, também chamamos em updateAll? Não, updateAll não modifica.
+
+            // Função para exportar backup
+            function exportBackup() {
+                const dataStr = JSON.stringify(transactions, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'meu_dinheiro_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('Backup exportado com sucesso! 📁', 'success');
+            }
+
+            // Função para restaurar backup
+            function restoreBackup(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (!Array.isArray(data)) throw new Error('Formato inválido');
+                        // Validação básica
+                        for (let item of data) {
+                            if (!item.descricao || typeof item.valor !== 'number' || !item.tipo || !item.data) {
+                                throw new Error('Dados corrompidos');
+                            }
+                        }
+                        if (confirm(`Deseja substituir todas as transações atuais (${transactions.length}) pelo backup com ${data.length} transações?`)) {
+                            transactions = data;
+                            saveTransactions();
+                            updateAll();
+                            showToast(`Backup restaurado com sucesso! ${data.length} transações carregadas.`, 'success');
+                        }
+                    } catch (err) {
+                        showToast('Arquivo de backup inválido. Verifique o formato.', 'error');
+                    }
+                };
+                reader.readAsText(file);
+                // Limpa o input para permitir selecionar o mesmo arquivo novamente
+                importFile.value = '';
+            }
+
+            // Eventos
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const descricao = descricaoInput.value.trim();
@@ -790,7 +970,7 @@
                     return;
                 }
                 transactions.push({ descricao, valor, tipo, categoria, data, id: Date.now() });
-                saveTransactions();
+                saveTransactions(); // salvamento automático
                 updateAll();
                 showToast('Transação adicionada com sucesso!');
                 descricaoInput.value = '';
@@ -818,10 +998,37 @@
                 categoriaSelect.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
             });
 
+            // Botão Salvar Agora (força gravação e mostra confirmação)
+            manualSaveBtn.addEventListener('click', function() {
+                saveTransactions();
+                showToast('Dados salvos manualmente com sucesso! 💾', 'success');
+                statusMessage.textContent = 'Salvo manualmente';
+                statusDot.style.background = '#5c4dff';
+                setTimeout(() => {
+                    statusDot.style.background = '#10b981';
+                    statusMessage.textContent = 'Salvo automaticamente';
+                }, 2000);
+            });
+
+            // Exportar
+            exportBtn.addEventListener('click', exportBackup);
+
+            // Importar
+            importBtn.addEventListener('click', function() {
+                importFile.click();
+            });
+            importFile.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    restoreBackup(e.target.files[0]);
+                }
+            });
+
+            // Inicialização
             function init() {
                 loadTransactions();
                 updateAll();
                 tipoSelect.dispatchEvent(new Event('change'));
+                updateLastSavedStatus(); // exibe hora do último salvamento
             }
 
             function loadChartJS(callback) {
